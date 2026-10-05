@@ -163,22 +163,21 @@ Ouvrir avec Cisco Packet Tracer 8.x (gratuit avec un compte Cisco NetAcad).
 
 <img width="847" height="287" alt="Poste du VLAN 10 ayant obtenu son adresse par DHCP" src="https://github.com/user-attachments/assets/8ed1189f-4bdb-4a10-970d-936388128350" />
 
+
 **2. Ping entre deux postes du même VLAN**
 
 <img width="583" height="391" alt="Ping réussi entre deux postes du même VLAN" src="https://github.com/user-attachments/assets/0cca5722-5100-4882-acbb-473ab513a484" />
 
-**3. Ping inter-VLAN du 50 vers le 10**
 
-Le premier paquet est perdu le temps de la résolution ARP, les suivants passent : le
-routage inter-VLAN fonctionne.
+**3. Ping inter-VLAN du 50 vers le 10**
 
 <img width="858" height="399" alt="Ping inter-VLAN du 50 vers le 10" src="https://github.com/user-attachments/assets/a75c9055-a5e2-4acb-b4e0-617d1c717426" />
 
+
 **4. Ping d'un poste interne vers 8.8.8.8**
 
-Traversée du switch L3, du routeur puis du pare-feu, avec traduction d'adresse.
-
 <img width="586" height="371" alt="Ping vers 8.8.8.8 à travers le NAT du pare-feu" src="https://github.com/user-attachments/assets/fd2c8f3a-0641-4316-b89e-48cd00984de1" />
+
 
 **5. `show vlan brief` sur le switch de niveau 3**
 
