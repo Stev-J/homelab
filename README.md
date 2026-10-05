@@ -9,7 +9,7 @@ Objectif: entretenir et démontrer des compétences concrètes de technicien sys
 
 | # | Lab | Technologies | Statut |
 |---|-----|--------------|--------|
-| [01](./01-infra-multivlan-dmz/) | Infrastructure PME multi-VLAN avec pare-feu et DMZ | Cisco ASA, switch L3, Packet Tracer | ✅ Terminé |
+| 01 | [Infrastructure multi-VLAN, pare-feu et DMZ](https://github.com/Stev-J/homelab/tree/main/01-infra-multivlan-dmz) | Cisco Packet Tracer, ASA | ✅ Terminé |
 | 02 | Active Directory : domaine, OU, GPO, poste client | Windows Server 2022, Windows 11 | ⚪ À venir |
 | 03 | GLPI : ticketing, inventaire agent, base de connaissances | Debian, GLPI | ⚪ À venir |
 | 04 | Automatisation d'administration | PowerShell | ⚪ À venir |
