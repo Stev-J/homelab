@@ -1,0 +1,40 @@
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname Routeur_FAI
+!
+ip cef
+no ipv6 cef
+!
+license udi pid CISCO1941/K9 sn FTX15246E2V-
+!
+spanning-tree mode pvst
+!
+interface GigabitEthernet0/0
+ ip address 203.0.113.1 255.255.255.252
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1
+ ip address 8.8.8.1 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip classless
+!
+ip flow-export version 9
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+end
