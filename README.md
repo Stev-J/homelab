@@ -1,9 +1,9 @@
 # Homelab – Steven Jacques
 
 Laboratoire personnel d'entraînement et de documentation technique.
-Chaque dossier correspond à un lab autonome : contexte, schéma, configurations, tests et retour d'expérience.
+Chaque dossier correspond à un lab autonome: contexte, schéma, configurations, tests et retour d'expérience.
 
-Objectif : entretenir et démontrer des compétences concrètes de technicien systèmes et réseaux, sur des cas proches de ce qu'on rencontre en PME.
+Objectif: entretenir et démontrer des compétences concrètes de technicien systèmes et réseaux, sur des cas proches de ce qu'on rencontre en PME.
 
 ## Labs
 
