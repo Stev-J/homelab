@@ -1,6 +1,6 @@
 # Lab 01 – Infrastructure PME multi-VLAN avec pare-feu et DMZ
 
-Conception et mise en œuvre d'un réseau d'entreprise complet : segmentation par service,
+Conception et mise en œuvre d'un réseau d'entreprise complet segmentation par service,
 routage inter-VLAN, adressage dynamique, pare-feu périmétrique et zone démilitarisée
 hébergeant un serveur web accessible depuis Internet.
 
@@ -51,7 +51,7 @@ un seul lien trunk.
 **Pourquoi le routeur FAI n'a aucune route vers les réseaux internes**
 Il ne connaît que ses réseaux directement connectés. Le NAT du pare-feu traduit toutes les
 adresses privées en 203.0.113.2, donc le FAI répond toujours à une adresse qu'il connaît.
-C'est le fonctionnement réel d'un accès opérateur : le FAI n'a pas à connaître le plan
+C'est le fonctionnement réel d'un accès opérateur le FAI n'a pas à connaître le plan
 d'adressage privé de son client.
 
 **Pourquoi des /30 sur les liens de transit**
@@ -153,8 +153,8 @@ Ouvrir avec Cisco Packet Tracer 8.x (gratuit avec un compte Cisco NetAcad).
 |---|------|------------------|--------|
 | 1 | Poste VLAN 10 obtient une IP par DHCP | Bail à partir de 10.0.10.20 | OK |
 | 2 | Ping entre deux postes du même VLAN | Réponse | OK |
-| 3 | Ping inter-VLAN 50 vers 10 | Réponse via le switch L3 (1er paquet perdu : résolution ARP) | OK |
-| 4 | Ping poste interne vers 8.8.8.8 | Réponse via NAT (1er paquet perdu : résolution ARP) | OK |
+| 3 | Ping inter-VLAN 50 vers 10 | Réponse via le switch L3 (1er paquet perdu résolution ARP) | OK |
+| 4 | Ping poste interne vers 8.8.8.8 | Réponse via NAT (1er paquet perdu résolution ARP) | OK |
 | 5 | `show vlan brief` sur le switch L3 | VLAN 10/20/30/40/50 actifs | OK |
 
 ### Captures
