@@ -61,6 +61,11 @@ Monter un petit système d'information d'entreprise tel qu'un technicien support
 | VMnet8 | NAT | 192.168.100.0/24, passerelle .2, DHCP .128 à .253 | WAN pfSense |
 | VMnet2 | Personnalisé, sans DHCP, sans adaptateur hôte | 10.0.10.0/24 | LAN |
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/5f8adf89-f55f-4077-b7a4-31c963b709ab" width="600" alt="Éditeur de réseau virtuel VMware">
+  <br><i>Éditeur de réseau virtuel VMware : VMnet8 (NAT, WAN) et VMnet2 (LAN 10.0.10.0/24)</i>
+</p>
+
 ### Adressage
 
 | Machine | IP | Passerelle | DNS |
