@@ -6,12 +6,12 @@
 
 Monter un petit système d'information d'entreprise tel qu'un technicien support N1/N2 le gère au quotidien :
 
-- un domaine Active Directory avec une arborescence d'OU propre ;
-- des comptes utilisateurs par service, des comptes d'administration séparés et un compte de service ;
-- des groupes de sécurité organisés selon la méthode **AGDLP** ;
-- DNS et DHCP portés par le contrôleur de domaine ;
-- un poste client Windows 11 joint au domaine ;
-- des partages par service et des GPO (à venir) ;
+- un domaine Active Directory avec une arborescence d'OU propre 
+- des comptes utilisateurs par service, des comptes d'administration séparés et un compte de service 
+- des groupes de sécurité organisés selon la méthode **AGDLP** 
+- DNS et DHCP portés par le contrôleur de domaine
+- un poste client Windows 11 joint au domaine
+- des partages par service et des GPO (à venir)
 - des scénarios support réalistes : première connexion, mot de passe oublié, compte verrouillé, ajout à un groupe.
 
 ## 2. Environnement
@@ -49,6 +49,11 @@ Monter un petit système d'information d'entreprise tel qu'un technicien support
      AD DS · DNS · DHCP          Windows 11 Pro
 ```
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/b4c2b018-8514-45d8-98f7-29860e8ab456" width="450" alt="Croquis du schéma réseau">
+  <br><i>Croquis à la main du réseau du lab</i>
+</p>
+
 ### Réseaux VMware
 
 | VMnet | Type | Réseau | Rôle |
@@ -74,6 +79,11 @@ Depuis la console pfSense :
 - **Option 1 — Assign Interfaces** : pas de VLAN, WAN = `em0`, LAN = `em1`.
 - **Option 2 — Set interface IP address** : LAN en `10.0.10.254/24`, sans passerelle amont, **sans serveur DHCP** (c'est le DC qui distribue les adresses).
 - **Option 7 — Ping host** : vérification avec `8.8.8.8`.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/69ae3f67-3537-4250-b914-6f51c77e0429" width="650" alt="Console pfSense : WAN et LAN configurés">
+  <br><i>Console pfSense : WAN em0 en DHCP, LAN em1 en 10.0.10.254/24</i>
+</p>
 
 ### 4.2 Contrôleur de domaine — réseau
 
@@ -110,6 +120,13 @@ Add-DhcpServerv4Scope -Name "LAN" -StartRange 10.0.10.100 -EndRange 10.0.10.199 
 Set-DhcpServerv4OptionValue -ScopeId 10.0.10.0 -Router 10.0.10.254 -DnsServer 10.0.10.10 -DnsDomain "lab.local"
 ```
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/771f0410-e703-49a4-a327-8dd1e3d0df93" width="420" alt="Pool d'adresses DHCP">
+  &nbsp;
+  <img src="https://github.com/user-attachments/assets/4720869a-205e-4132-84c9-d27b504bbd49" width="420" alt="Zone DNS lab.local">
+  <br><i>Étendue DHCP : plage 10.0.10.100 à 10.0.10.199, options routeur, DNS et domaine</i>
+</p>
+
 ### 4.5 Arborescence d'OU
 
 ```
@@ -133,6 +150,12 @@ lab.local
 ```
 
 Le contrôleur de domaine reste dans l'OU par défaut **Domain Controllers** (voir § 6).
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/3d297fae-c43b-4b0a-8bbb-fc150c4689d3" width="320" alt="Arborescence Active Directory (haut)"><br>
+  <img src="https://github.com/user-attachments/assets/10cc61a1-5d1a-40ff-a2d2-33cc8a9d570c" width="320" alt="Arborescence Active Directory (suite)">
+  <br><i>Console « Utilisateurs et ordinateurs Active Directory »</i>
+</p>
 
 ### 4.6 Comptes
 
@@ -170,12 +193,25 @@ Get-ADGroup -Filter * -SearchBase "OU=Domaine_Local,OU=Groupes,OU=LAB,DC=lab,DC=
   Sort-Object Groupe | Format-Table -AutoSize
 ```
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/07557509-1888-467c-a323-2dff838e70f0" width="650" alt="Groupes de domaine local et leurs membres">
+  <br><i>Résultat : chaque groupe DL contient les groupes GG, jamais des utilisateurs</i>
+</p>
+
 ### 4.8 Poste client
 
 - PC-01 en DHCP : reçoit 10.0.10.100, passerelle .254, DNS .10, suffixe `lab.local`.
 - Test du port LDAP avant jonction : `Test-NetConnection 10.0.10.10 -Port 389`.
 - Jonction au domaine avec un **compte d'administration nominatif** (`LAB\adm.marc.fontaine`), pas avec le compte Administrateur.
 - Objet ordinateur rangé dans `Postes\Bureautique`.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/7586dcff-9d4c-404f-a865-db23dcf388f2" height="240" alt="Jonction au domaine avec un compte admin nominatif">
+  &nbsp;
+  <img src="https://github.com/user-attachments/assets/d63c5c04-5d75-4ed0-94b6-770a2d170da0" height="240" alt="Bienvenue dans le domaine lab.local">
+  <br><i>Jonction de PC-01 avec LAB\adm.marc.fontaine, puis confirmation « Bienvenue dans le domaine lab.local »</i>
+</p>
+
 
 ## 5. Tests de recette
 
@@ -193,14 +229,10 @@ Get-ADGroup -Filter * -SearchBase "OU=Domaine_Local,OU=Groupes,OU=LAB,DC=lab,DC=
 | GPO lecteurs réseau, panneau de configuration, mots de passe | `gpresult /r` sur PC-01 | ⏳ à venir |
 | Scénarios support (reset mot de passe, déverrouillage, ajout à un groupe) | — | ⏳ à venir |
 
-### Captures
-
-![Console pfSense WAN + LAN](captures/02-pfsense-console-wan-lan.png)
-![Arborescence AD](captures/03-ad-arborescence-ou.png)
-![Groupes AGDLP](captures/04-agdlp-groupes-membres.png)
-![Options DHCP](captures/05-dhcp-options-etendue.png)
-![Jonction au domaine](captures/06-pc01-jonction-domaine.png)
-![Groupes de l'utilisateur](captures/08-whoami-groups-emma.png)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/7ac85957-bfa8-4d4a-9529-522eadc24ad8" width="650" alt="Groupes de l'utilisateur emma.lambert">
+  <br><i>Session d'emma.lambert : elle hérite des droits DL via son groupe GG_Informatique</i>
+</p>
 
 ## 6. Problèmes rencontrés
 
