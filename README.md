@@ -15,14 +15,14 @@ Objectif: entretenir et démontrer des compétences concrètes de technicien sys
 | 04 | Automatisation d'administration | PowerShell | ⚪ À venir |
 | 05 | Entra ID et Intune : identités, MFA, enrôlement | Microsoft 365 | ⚪ À venir |
 | 06 | Poste standard, déploiement et sauvegarde/restauration | Windows 11, winget, Veeam | ⚪ À venir |
-| 07 | Supervision et administration Linux | Debian, Docker, Uptime Kuma | ⚪ À venir |
+| 07 | [Supervision d'infrastructure avec Zabbix](./07-supervision-zabbix/) | Debian 13, Zabbix 7.0, PostgreSQL, SNMP | 🟡 En cours |
 | 08 | Segmentation IT/OT et filtrage Modbus TCP | pfSense, OpenPLC, Kali | ⚪ À venir |
 
 ## Environnement
 
 - VMware Workstation sur poste personnel
 - Cisco Packet Tracer pour les maquettes réseau
-- VM Windows Server 2022, Windows 11, Debian 12, Kali Linux
+- VM Windows Server 2022, Windows 11, Debian 13, Kali Linux
 
 ## Conventions
 
