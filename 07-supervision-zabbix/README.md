@@ -2,7 +2,7 @@
 
 > **Statut : 🟡 En cours** — supervision par ping, carte et tableau de bord opérationnels. Prochaine étape : Zabbix Agent 2 sur les postes Windows et SNMP sur pfSense.
 
-![Tableau de bord Homelab](captures/05-tableau-de-bord.png)
+<img width="2093" height="1227" alt="222" src="https://github.com/user-attachments/assets/64ec3ff4-61d9-463a-b6ac-9ba129fbbc06" />
 
 ## 1. Objectif
 
