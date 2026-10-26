@@ -1,8 +1,8 @@
 # Lab 07 — Supervision d'une infrastructure avec Zabbix
 
-> **Statut : 🟡 En cours** — supervision par ping, carte et tableau de bord opérationnels. Prochaine étape : Zabbix Agent 2 sur les postes Windows et SNMP sur pfSense.
+> **Statut : 🟡 En cours** — supervision par ping et SNMP (pfSense durci), carte et tableau de bord opérationnels. Prochaine étape : Zabbix Agent 2 sur les postes Windows.
 
-<img width="900" alt="Tableau de bord Homelab" src="https://github.com/user-attachments/assets/6df68f9f-a0ca-480d-af40-f1b51aaf9a29" />
+<img width="900" alt="Carte Zabbix : tous les équipements OK" src="https://github.com/user-attachments/assets/348c1ea1-b9d3-4455-a395-da6147b6795d" />
 
 ## 1. Objectif
 
@@ -30,7 +30,7 @@ Au quotidien, un technicien support utilise un outil de supervision pour :
 
 La carte Zabbix est posée sur un **plan d'usine fictif** (« ACME Industrie ») pour situer chaque équipement dans un site réaliste. Aucun plan réel n'est utilisé.
 
-<img width="900" alt="Carte Zabbix : tous les équipements OK" src="https://github.com/user-attachments/assets/348c1ea1-b9d3-4455-a395-da6147b6795d" />
+*Sur la carte en haut de page, chaque équipement est placé dans sa zone du site : pare-feu, contrôleur de domaine et serveur de supervision en salle serveur, poste utilisateur dans les bureaux.*
 
 | Machine | Rôle | Emplacement (carte) | IP |
 |---|---|---|---|
@@ -97,6 +97,10 @@ Un clic sur une machine de la carte → **Ping** lance le test depuis le serveur
 
 Tableau de bord **Homelab** : carte du site + widget **Problèmes** (groupes Homelab et Zabbix servers) + graphique du temps de réponse ICMP.
 
+<img width="900" alt="Tableau de bord Homelab" src="https://github.com/user-attachments/assets/6df68f9f-a0ca-480d-af40-f1b51aaf9a29" />
+
+*Le widget « Disponibilité de l'hôte » affiche « Inconnu » tant que Zabbix Agent 2 n'est pas installé sur les machines Windows (prochaine étape).*
+
 ## 5. Tests de recette
 
 | Test | Résultat attendu | Résultat |
@@ -130,6 +134,8 @@ Tableau de bord **Homelab** : carte du site + widget **Problèmes** (groupes Hom
 | Panne de `PC-01` : l'icône passe en rouge mais le lien reste vert | Aucun indicateur de lien (un lien ne suit pas automatiquement l'état des hôtes) | Indicateur `Unavailable by ICMP ping` ajouté sur le lien |
 | Panne de `PC-01` : **tous** les liens passent au rouge | Le déclencheur de PC-01 avait été ajouté sur tous les liens | Vérification lien par lien : un seul déclencheur, celui de la machine au bout du lien |
 | Alerte « High swap space usage (less than 50% free) » sur le serveur Zabbix | VM à 2 Go de RAM, saturée par le navigateur et l'interface graphique lancés dans la VM (diagnostic : `free -h`, `ps aux --sort=-%mem`) | RAM passée à 4 Go ; à terme, consultation de Zabbix depuis le poste client et serveur sans interface graphique |
+| SNMP pfSense en configuration par défaut | Communauté `public` et écoute sur toutes les interfaces (WAN inclus) | Communauté personnalisée, écoute sur le LAN uniquement ; test `snmpwalk -c public` → Timeout |
+| Après changement de communauté : SNMP pfSense « Non disponible » (timed out) | Zabbix interrogeait encore avec l'ancienne communauté | Macro `{$SNMP_COMMUNITY}` mise à jour sur l'hôte + `zabbix_server -R config_cache_reload` |
 
 ## 7. Ce que j'ai appris
 
@@ -142,7 +148,7 @@ Tableau de bord **Homelab** : carte du site + widget **Problèmes** (groupes Hom
 ## 8. Prochaines étapes
 
 - [ ] Zabbix Agent 2 sur `SRV-DC01` et `PC-01` (CPU, RAM, disques, services AD/DNS)
-- [ ] SNMP sur pfSense (interfaces, trafic)
+- [x] SNMP sur pfSense (interfaces, trafic), communauté personnalisée et écoute sur le LAN uniquement
 - [ ] Fuseau horaire Europe/Paris (serveur + interface Zabbix)
 - [ ] Notifications par e-mail sur les problèmes de sévérité Haut
 - [ ] Serveur de supervision sans interface graphique, consulté depuis le poste client
